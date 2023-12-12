@@ -12,3 +12,7 @@ mongoose.connection
 	.on("error", error => {
 		console.warn("Error", error);
 	});
+
+beforeEach(done => {
+	mongoose.connection.collections.users.drop(() => done());
+});
