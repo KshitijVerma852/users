@@ -15,3 +15,8 @@ before(done => {
 beforeEach(done => {
 	mongoose.connection.collections.users.drop(() => done());
 });
+
+after(done => {
+	mongoose.connection.close();
+	done();
+});
