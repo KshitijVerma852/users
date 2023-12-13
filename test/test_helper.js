@@ -1,17 +1,16 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const MONGO_URI = process.env.MONGO_URI;
+mongoose.Promise = global.Promise;
 
-mongoose.connect(MONGO_URI);
+before(done => {
+	const MONGO_URI = process.env.MONGO_URI;
+	mongoose.connect(MONGO_URI);
 
-mongoose.connection
-	.once("open", () => {
-		console.log("Good to go.");
-	})
-	.on("error", error => {
-		console.warn("Error", error);
-	});
+	mongoose.connection
+		.once("open", () => done())
+		.on("error", error => console.warn("Error", error));
+});
 
 beforeEach(done => {
 	mongoose.connection.collections.users.drop(() => done());
